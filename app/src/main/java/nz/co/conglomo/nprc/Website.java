@@ -25,7 +25,8 @@ public class Website extends Activity {
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (Uri.parse(url).getHost().equals("nprc.nz")) {
+            Uri uri = Uri.parse(url);
+            if (uri != null && uri.getHost() != null && uri.getHost().equals("nprc.nz")) {
                 // This is my web site, so do not override; let my WebView load the page
                 return false;
             }
