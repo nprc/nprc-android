@@ -15,7 +15,7 @@ public class Website extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_website);
-        WebView myWebView = (WebView)findViewById(R.id.webview);
+        WebView myWebView = findViewById(R.id.webview);
         myWebView.setWebViewClient(new MyWebViewClient());
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
