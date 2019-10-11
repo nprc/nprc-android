@@ -1,5 +1,6 @@
 package nz.co.conglomo.nprc;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.webkit.WebViewClient;
 
 public class Website extends Activity {
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
