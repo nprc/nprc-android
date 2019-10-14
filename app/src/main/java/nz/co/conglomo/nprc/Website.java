@@ -9,19 +9,44 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-
 public class Website extends Activity {
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_website);
+        handleIntent(this.getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void handleIntent(Intent intent) {
+
+        // Set up the web view
         WebView myWebView = findViewById(R.id.webview);
         myWebView.setWebViewClient(new MyWebViewClient());
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        myWebView.loadUrl("http://nprc.nz/");
+
+        // Handle the intent
+        if (intent != null) {
+            String action = intent.getAction();
+            Uri data = intent.getData();
+            if (action != null
+                    && action.equals(Intent.ACTION_VIEW)
+                    && data != null) {
+                myWebView.loadUrl(data.toString());
+                return;
+            }
+        }
+
+        // Default to the home page
+        myWebView.loadUrl("https://nprc.nz/");
     }
 
     private class MyWebViewClient extends WebViewClient {
