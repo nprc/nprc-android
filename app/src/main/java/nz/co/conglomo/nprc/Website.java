@@ -15,7 +15,7 @@ public class Website extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_website);
-        handleIntent(this.getIntent());
+        handleIntent(getIntent());
     }
 
     @Override
@@ -34,34 +34,36 @@ public class Website extends Activity {
         webSettings.setJavaScriptEnabled(true);
 
         // Handle the intent
+        String url = "https://nprc.nz/";
         if (intent != null) {
             String action = intent.getAction();
             Uri data = intent.getData();
             if (action != null
                     && action.equals(Intent.ACTION_VIEW)
                     && data != null) {
-                myWebView.loadUrl(data.toString());
-                return;
+                url = data.toString();
             }
         }
 
         // Default to the home page
-        myWebView.loadUrl("https://nprc.nz/");
+        myWebView.loadUrl(url);
     }
 
     private class MyWebViewClient extends WebViewClient {
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Uri uri = Uri.parse(url);
-            if (uri != null && uri.getHost() != null && uri.getHost().equals("nprc.nz")) {
+            if (uri != null && uri.getHost() != null && "nprc.nz".equals(uri.getHost())) {
                 // This is my web site, so do not override; let my WebView load the page
                 return false;
+            } else {
+                // Otherwise, the link is not for a page on my site,
+                // so launch another Activity that handles URLs
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+                return true;
             }
-
-            // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            startActivity(intent);
-            return true;
         }
     }
 }
