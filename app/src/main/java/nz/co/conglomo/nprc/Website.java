@@ -2,9 +2,12 @@ package nz.co.conglomo.nprc;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -45,6 +48,16 @@ public class Website extends Activity {
             }
         }
 
+        // Add back button support
+        myWebView.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_UP && myWebView.canGoBack()) {
+                myWebView.goBack(); // Navigate back to previous web page if there is one
+                return true;
+            } else {
+                return false;
+            }
+        });
+
         // Default to the home page
         myWebView.loadUrl(url);
     }
@@ -60,9 +73,13 @@ public class Website extends Activity {
             } else {
                 // Otherwise, the link is not for a page on my site,
                 // so launch another Activity that handles URLs
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
-                return true;
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                } catch (ActivityNotFoundException e) {
+                    return false;
+                }
             }
         }
     }
