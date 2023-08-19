@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
+    namespace 'nz.co.conglomo.nprc'
 
     defaultConfig {
         applicationId "nz.co.conglomo.nprc"
         minSdkVersion 19
-        targetSdkVersion 31
-        versionCode 9
-        versionName "1.0.9"
+        targetSdkVersion 33
+        versionCode 10
+        versionName "1.0.10"
     }
     buildTypes {
         release {
