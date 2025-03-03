@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace 'nz.co.conglomo.nprc'
 
     defaultConfig {
@@ -18,9 +18,9 @@ android {
         }
     }
     compileOptions {
-        // Sets Java compatibility to Java 8
-        targetCompatibility = JavaVersion.VERSION_1_8
-        sourceCompatibility = JavaVersion.VERSION_1_8
+        // Sets Java compatibility to Java 17
+        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
     }
 }
 
