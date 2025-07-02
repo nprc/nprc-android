@@ -5,12 +5,17 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 public class Website extends Activity {
 
@@ -35,6 +40,23 @@ public class Website extends Activity {
         myWebView.setWebViewClient(new MyWebViewClient());
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+
+        // Setup the insets for the app bar for edgeToEdge
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            ViewCompat.setOnApplyWindowInsetsListener(myWebView, (v, windowInsets) -> {
+                Insets systemBarInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+
+                if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams lp) {
+                    lp.leftMargin = systemBarInsets.left;
+                    lp.topMargin = systemBarInsets.top;
+                    lp.rightMargin = systemBarInsets.right;
+                    lp.bottomMargin = systemBarInsets.bottom;
+                    v.setLayoutParams(lp);
+                }
+                return windowInsets;
+            });
+        }
+
 
         // Handle the intent
         String url = "https://nprc.nz/";
