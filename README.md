@@ -7,7 +7,7 @@ You can download this app from the app store at https://play.google.com/store/ap
 ## Requirements
 
 This app requires the following:
- * Android 5.0 or higher
+ * Android 7.0 or higher
  * An Internet Connection
 
 ## Notes
